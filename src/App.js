@@ -4,6 +4,7 @@ import './App.css';
 import * as PIXI from "pixi.js";
 
 const near = 20;
+const scaleFactor = 800;
 
 class App extends Component {
   speed = 1;
@@ -13,8 +14,14 @@ class App extends Component {
   nearMissAnimation = 0;
 
   componentWillMount() {
-    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     this.app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, transparent: false });
+    this.app.renderer.autoResize = true;
+    window.onresize = () => {
+      this.app.renderer.resize(window.innerWidth, window.innerHeight);
+      const scale = Math.min(window.innerHeight, window.innerWidth) / scaleFactor;
+      this.sprite.width = this.swidth * scale;
+      this.sprite.height = this.sheight * scale;
+    }
   }
 
   injectPixiContext(element) {
@@ -25,6 +32,7 @@ class App extends Component {
   }
 
   initializeRender() {
+    const scale = Math.min(window.innerHeight, window.innerWidth) / scaleFactor;
     const graphics = new PIXI.Graphics();
     graphics.beginFill(0x000000);
     graphics.drawRect(0, 0, this.app.renderer.width, this.app.renderer.height);
@@ -33,11 +41,17 @@ class App extends Component {
     this.sprite.tint = 0xff0000;
     this.sprite.x = Math.random() * 300;
     this.sprite.y = Math.random() * 300;
+    this.swidth = this.sprite.width;
+    this.sheight = this.sprite.height;
+    this.sprite.width = this.swidth * scale;
+    this.sprite.height = this.sheight * scale;
     this.app.stage.addChild(this.sprite);
     this.app.ticker.add((delta) => this.tick(delta));
     this.app.stage.interactive = true;
     this.app.stage.mousedown = event => this.speed = 100;
+    this.app.stage.touchstart = event => this.speed = 100;
     this.app.stage.mouseup = event => this.speed = 1;
+    this.app.stage.touchend = event => this.speed = 1;
     this.nearMiss = new PIXI.BitmapText("Near Miss", { font: "110px Arcade Interlaced" });
     this.nearMiss.scale = new PIXI.Point(0.5, 0.5);
     this.nearMiss.tint = 0xcc0000;
@@ -49,13 +63,13 @@ class App extends Component {
   }
 
   removeNearMiss() {
-    this.nearMiss.x = this.app.renderer.width;
-    this.nearMiss.y = this.app.renderer.height;
+    this.nearMiss.x = this.app.renderer.width + 3000;
+    this.nearMiss.y = this.app.renderer.height + 3000;
   }
 
   removeMissedBy() {
-    this.missedBy.x = this.app.renderer.width;
-    this.missedBy.y = this.app.renderer.height;
+    this.missedBy.x = this.app.renderer.width + 3000;
+    this.missedBy.y = this.app.renderer.height + 3000;
   }
 
   renderNearMiss() {
