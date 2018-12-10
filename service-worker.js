@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/DVDScreensaver/precache-manifest.64cc3ddfb5380c5481e8742b7da23894.js"
+  "/DVDScreensaver/precache-manifest.e43891229bb681d3d816dc3c7bacafa9.js"
 );
 
 workbox.clientsClaim();
