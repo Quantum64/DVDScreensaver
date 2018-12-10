@@ -34,7 +34,8 @@ class App extends Component {
       this.sprite.width = this.swidth * scale;
       this.sprite.height = this.sheight * scale;
       this.nearMiss.scale = new PIXI.Point(0.5 * scale, 0.5 * scale);
-      this.missedBy.scale = new PIXI.Point(0.5 * scale, 0.5 * scale);
+      this.missedBy.scale = new PIXI.Point(0.5 * scale, 0.5 * scale); 
+      this.hit.scale = new PIXI.Point(0.5 * scale, 0.5 * scale);
     }
     for (const map of mappings) {
       keyboard(map[0]).press = () => {
