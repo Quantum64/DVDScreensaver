@@ -2,7 +2,7 @@
   "name": "dvd",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://quantum64.github.io/DVDScreensaver",
+  "homepage": ".",
   "dependencies": {
     "pixi.js": "^4.8.3",
     "react": "^16.6.3",
